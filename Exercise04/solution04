@@ -1,0 +1,35 @@
+####################################_Pier_Luigi_Manfrini_###########################################
+
+
+
+	Find all files in the system named "core"; try to avoid visualizing errors on the screen (put errors in a log file):
+
+		find / -name core 2> /tmp/log_file  		 if using 'sudo find', way less error expected in the log_file
+
+
+
+	Find all the files whose name contains the string conf and show its size: 
+		
+		find / -name '*conf*' -exec du -sh '{}' ';'	 to avoid showing errors in the stdout run with 'sudo' or simply use:
+									find / -name '*conf*' -exec du -sh '{}'';' 2> /dev/null (or some file)
+
+
+	Find all files of the bin user, which are in the /usr directory (and all its subdirectories) and whose permissions are: -r-xr-xr-x (555):
+		
+		find /usr -user bin -perm -555
+
+
+	Find all files of yours that have been seen from less than a week:
+
+		find /home/pier -atime 7 			to avoid errors here as well we may want to use:	find /home/pier -atime 7 2> /dev/null
+								to allow a better listing we may want to:		ls -l $(find /home/pier -atime 7)	
+
+Note: 
+	-if with 'all files' we mean all type of files the commands above are fine
+	
+	-if instead we mean all regular files exluding directories we need to add '-type f'
+		as first flag of the find command after the directory in which we are searching
+
+
+####################################################################################################
+
