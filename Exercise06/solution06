@@ -1,0 +1,23 @@
+######################################_Pier_Luigi_Manfrini_#########################################
+	
+
+	Find all files in the system that are greater than 2Mbyte and compress them into a sigle archive.tar.gz file. 
+	Then do it again with all file in a specific folder (create one in your home directory) 
+	and then move them into another folder (still in your home folder) called big_files.
+		Hint: Look for tar command and resort to the -exec option of the find command.
+
+	1) 	find / -type f -size +2M -exec tar -cvf /home/pier/archive.tar.gz {} \;
+
+	2) 	find /home/pier/specific_directory -type f -size +2M -exec mv {} /home/pier/big_files/.
+
+
+	Notes: 
+		-However +2M, meaning greater that 2MB, is actually rounded up to the next unit (3) hence finding files >= 3.
+		So the user may want to use -size +2048k instead, hence finding all files >= 2049kilobytes (2Mbytes + 1kilobyte)
+
+		-In order to reduce the number of operations done, instead of executing one command per each finded element,
+		we can execute the command after the list of elements has been created. So just terminate the '-exec' with \+ 
+		instead of \;
+
+
+####################################################################################################
