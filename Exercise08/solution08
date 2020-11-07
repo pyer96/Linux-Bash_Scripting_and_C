@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+: '
+###############################_Pier_Luigi_Manfrini_############################
+
+Script usage: <./solution08> 
+
+This script simply verify if the /usr/local/bin directory is included in $PATH 
+
+################################################################################
+'
+	if [ $# -ne 0 ]; then 
+		echo "Wrong Usage: no arguments from CLI needed for this script"
+		exit 1
+	fi
+
+	echo "Verifying thath /usr/local/bin belongs to the env \$PATH variable..."
+	sleep 2			#(just to give the impression of a longer and more tedious finding process XD)
+
+STRING=`echo $PATH | grep --color=always /usr/local/bin`		#equivalent -> STRING=$(....)
+
+	if [ -n "$STRING" ]; then 
+	       echo $STRING
+	else
+		echo "The /usr/local/bin directory is not included in your PATH!"
+	fi	
+
