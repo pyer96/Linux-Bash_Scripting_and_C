@@ -1,0 +1,9 @@
+#####################################_Pier_Luigi_Manfrini_##########################################
+
+	
+	Find all the directories of your home whose name ends with the string "backup" (create some of them to check it) and move them in a backup directory:
+
+		mv $(find /home/pier -type d -name '*backup') /home/pier/backup_dir
+
+
+####################################################################################################
