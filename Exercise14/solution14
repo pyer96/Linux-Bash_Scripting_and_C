@@ -1,0 +1,67 @@
+#!/usr/bin/bash
+: '
+###############################_Pier_Luigi_Manfrini_##########################################
+
+This script creates the following folder tree
+
+		destination --- project_name ---|--- branches
+						|--- tags
+						|--- trunk
+
+Script usage:
+		<./solution14> <destination_DIR> <project_name>
+
+Notes: 
+		-All parameters are checked for their integrity
+		-If destination_DIR does not exist, the script ask permission to create it
+#############################################################################################
+' 
+
+NEWLINE=$(printf "\n")
+
+if [[ $# -ne 2 ]]; then
+	echo "Wrong Usage: <./solution> <destination_directory> <project_name>"
+	exit 1;
+fi
+
+if [[ ! -d $1 ]]; then
+	echo -n "The destination folder <$1> does not exist! Want to create it? [Y/n]: "
+	read ANS;
+	case $ANS in
+		[yY]|[yY][eE][sS]|$NEWLINE)
+			mkdir $1
+		;;
+       		*)
+			exit 1
+		;;
+	esac		
+elif [[ ! -w $1 ]] ; then 
+	echo "The destination folder does not have Write permissions"
+	exit 1
+fi
+
+#: ' # Uncomment if you want/dontwant to detect wether Relative or Absolute Path has been used; 
+     # altought it does not affect in any way the functioning of the script
+
+	if [[ $1 =~ ^[/] ]]; then
+		echo "Destination directory <$1> addressed through its ABSOLUTE PATH"
+	else 
+		echo "Destination directory <$1> addressed through its RELATIVE PATH ---> (relative to $PWD)"
+	fi 
+
+#'
+
+if [[ ! -d $1/$2 ]]; then
+	mkdir $1/$2 && echo "Project folder <$2> created..."
+	if [[ $? -ne 0 ]]; then
+		echo "Failed while creating $2"
+	fi 
+	mkdir $1/$2/{branches,tags,trunk} && echo "Subfolders of project <$2> correctly created"
+	if [[ $? -ne 0 ]]; then 
+		echo "Failed while creating project subfolders"
+	fi
+else
+	echo "The Project Direcrory <$2> already exists!"
+
+fi
+
