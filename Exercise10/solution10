@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+: '
+###########################_Pier_Luigi_Manfrini_###########################
+This script generates multiple files (inside the script folder) according to 
+the name and quantity specifyed by the user. A list of all created files is
+then printed (both in ascending and descending order) to STDOUT and into a 
+file called "list.txt". 
+
+Script usage:
+	<solution10> <file_name> <quantity>
+
+Note:
+	The generated files will be called <file_name>{1..quantity}
+###########################################################################
+'
+
+
+if [[ $# -ne 2 ]]; then 
+	echo "Wrong Usage: <solution10> <file_name> <quantity>"
+	exit 1
+fi
+
+for i in $(eval echo {1..$2}); do
+if [[ $i -lt 10 ]]; then
+	touch "$10$i"
+else
+	touch $1$i
+fi
+done 
+
+ls  $1* -r  | tee list.txt
+printf "\n"
+ls  $1* | tee list.txt
+
