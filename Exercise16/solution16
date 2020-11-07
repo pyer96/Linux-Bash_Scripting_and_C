@@ -1,0 +1,75 @@
+#!/usr/bin/bash
+
+: '
+#################################_Pier_Luigi_Manfrini_##############################
+
+This script accepts two folders from CLI as arguments and copy all the content of 
+the first into the second one, maintaining the structure (subfolders are included).
+All files ending with *.txt are reversed using the C program solution16.c.
+The script is recursive through all subfolders.
+Usage:
+	<./solution16> <source_directory> <destination_directory>
+
+
+Note: 
+	-The destination_directory, if not existing, can be created with the script
+	-ALL converted (reverted) filed are, once created, reverted back again and 
+       	the resulting file is checked to be exactly equal to the original file, 
+ 	otherwise an error will be promped	 
+
+####################################################################################
+' 
+
+SRC=solution16.c
+OUT=solution16.out
+
+NEWLINE=$(printf "\n")
+
+if [[ $# -ne 2 ]]; then
+	echo "Wrong Usage: <./solution16> <folder1> <folder2>"
+	exit 1
+fi 
+
+if [[ ! -d $1 ]]; then
+	echo "The source directory you selected do not exist!"
+	exit 1
+elif [[ ! -d $2 ]]; then
+	echo -n "The destination directory you selected do not exist! Want to create it? [Y/n]: "
+	read ANS
+	case $ANS in
+		[Yy]|[Yy][Ee][Ss]|$NEWLINE)
+		mkdir $2
+		;;
+		*)
+		exit 1
+		;; 
+	esac
+fi
+
+if [[ ! -f $OUT ]]; then  
+	gcc $SRC -o $OUT  
+fi 
+
+for i in $(ls $1); do
+	if [[ -d $1/$i ]]; then
+		if [[ ! -d $2/$i ]]; then 
+			mkdir $2/$i
+		fi
+		$0 $1/$i $2/$i 
+	elif [[ $i == *.txt ]]; then
+		./$OUT $1/$i $2/${i%.txt}reverted.txt
+		./$OUT $2/${i%.txt}reverted.txt /tmp/check
+		if ! $(cmp $1/$i /tmp/check) ; then 
+		echo "There has been an error during the reversal \
+			of $i -> cmp return: $?"
+		fi
+	else 
+		cp  $1/$i $2/$i
+	fi
+
+done
+
+if [[ -f $OUT ]]; then
+	rm $OUT
+fi
+
