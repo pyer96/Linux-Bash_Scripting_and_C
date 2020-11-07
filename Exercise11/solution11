@@ -1,0 +1,52 @@
+#!/usr/bin/bash
+
+: '
+############################_Pier_Luigi_Manfrini_#############################
+This script draws a rectangle in the STDOUT according to the size provided by
+the user in the CLI. 
+
+<./solution11> <width> <height>
+
+##############################################################################
+'
+
+if [[ $# -ne 2 ]]
+then
+	echo "Wrong Usage: ./solution11 <width> <height>"
+	exit 1
+fi
+
+if [[ ! "$1" =~ [0-9]+$ || ! "$2" =~ [0-9]+$ ]]
+then
+	echo "Invalid nuber inserted";
+	exit 1
+else
+	if [[ $1 -lt 1 || $2 -lt 1 ]]; then
+		echo "Numbers cannot be lower than 1"
+		exit 1
+	fi
+fi
+
+ 
+for i in $(eval echo {1..$2})
+do
+	
+	if [ $i -eq 1 -o $i -eq $2 ]; then
+		printf "+"
+		for j in $(eval echo {2..$(($1-1))})
+			do
+			printf  "-"
+		done	
+		printf "+\n"
+	else
+	 	printf "|"
+		for j in $(eval echo {2..$(($1-1))})
+		do
+			printf " "
+		done	
+		printf "|\n"
+	fi
+	
+done 	
+
+printf "\n"
