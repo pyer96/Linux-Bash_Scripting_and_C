@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+: ' 
+##########################_Pier_Luigi_Manfrini_#############################
+This script receives a directory and a number representing a size from CLI
+
+<./solution13> <directory> <size>
+
+size is meant in bytes and the files greater that the wanted size belonging
+to the directory provided are listed on STDOUT.
+The search is done only in the directory and not on possible subdirectories
+############################################################################
+'
+
+if [[ $# -ne 2 ]]; then 
+	echo "Wrong Usage: <./solution13> <directory> <size(in bytes)>"
+	exit 1
+fi
+
+if [[ ! -d  $1 ]]; then 
+	echo "Invalid directory"
+elif  [[ ! "$2" =~ [0-9]+$ ]]; then
+	echo "Invalid number"
+else	
+: '
+With the '-' sign the flag -perm -440 will match all files that have AT LEAST 444 permissions, 
+not excluding, for example, a file with 777. But, for example, a file with 773 will not be matched
+since the "universe" has not read permissions for that file
+'
+	find $1 -maxdepth 1 -type f -perm -444 -size +$2c -exec ls -l {} ';'
+# -exec ls -l {} added to better visualize the results and their sizes
+fi
