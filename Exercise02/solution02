@@ -1,0 +1,38 @@
+#########################################_Pier_Luigi_Manfrini_######################################
+
+	All commands executed in the Working Directory: a/ 
+
+	1 Create an empty file named test.txt in a:
+		touch test.txt
+
+	2 Duplicate the test.txt and name the duplicate test_dup.txt:
+		cp test.txt test_dup.txt
+
+	3 Edit the test.txt file with some poetry of William Blake:
+		printf "To see a World in a Grain of Sand\nAnd a Heaven in a Wild Flower,\nHold Infinity in the palm of your hand\nAnd Eternity in an hour.\n" > test.txt
+
+	4 Move the text.txt file into d:
+		sudo mv test.txt d/.				(sudo needed since folder "d" has write permissions disabled for anyone)
+
+	5 Rename test.txt into w_blake_poetry.txt: 		
+		sudo mv d/test.txt d/w_blake_poetry.txt 	(sudo needed since folder "d" has write permissions disabled for anyone)
+
+	6 Duplicate w_blake_poetry.txt into c:
+		cp d/w_blake_poetry.txt b/c/.
+
+	7 Remove folder d:
+		sudo rm -r d 					(sudo needed because d is write-protected)
+
+	8 Print the full content of the a directory
+	  (including all subdirs, at any level) and 
+	  save it into a file named a_dir.txt,
+	  placed in folder b: 					ls -R . | tee b/a_dir.txt
+
+	9 Generate a new file in folder e with a copy 
+	  of the first 15 lines of the test.txt file: 		head -n 15 b/c/w_blake_poetry.txt > b/e/first_15.txt  (used the w_blake_poetry.txt file instead since test.txt was previously deleted inside d)
+
+	10Generate a new file in folder f with a copy 		tail -n 15 b/c/w_blake_poetry.txt > b/f/last_15.txt   (" ")
+	  of the last 15 lines of the test.txt file 
+
+
+####################################################################################################
