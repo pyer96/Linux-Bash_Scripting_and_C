@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+: ' 
+######################_Pier_Luigi_Manfrini_#############################
+
+This script launches a program that draws a tree with a user-defined 
+number of strings. It also checks the arguments passed to it and reports
+wether it ends with errors or not.
+
+Script usage: 
+	<./solution12>
+
+########################################################################
+' 
+
+gcc ex_3lab0.c
+
+echo -n "Enter the number of tree lines to draw: "
+read N
+
+if [[ ! "$N" =~ ^[0-9]+$ ]]; then
+	echo "Sorry you must enter only integers"
+else 
+	if [ $N -lt 1 ]; then 
+		echo "Enter a number greater than 0!"		# in practice this sanity check is not really needed since the regex will exclude agruments starting with - sign
+	else 
+		./a.out $N
+		if [[ $? -eq  0 ]]; then
+			echo "Program terminated without errors!"
+		else 
+			echo "Program terminated with error number $? !" 
+		fi 
+	fi
+fi
+
+rm a.out
