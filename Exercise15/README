@@ -1,0 +1,10 @@
+This script accepts at most 3 arguments from CLI
+and saves the number of arguments received in the 
+environmental variable N in the current shell's env.
+
+In particular the script, instead of exporting the variable
+in its temporary and closed scope environment makes the parent 
+process (the shell) execute the export command so that the N variable
+will be available, untill shell is open, in the parent environment.
+No .bashrc is touched. No source command needed. 
+-> just need to execute inside $(...)
