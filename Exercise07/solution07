@@ -1,0 +1,20 @@
+#!/usr/bin/bash 
+: ' 
+###########################_Pier_Luigi_Manfrini_################################
+Script usage: <./solution07> <source_DIR> <destination_DIR> 
+
+This script copies all the files and folders from the first directory to the 
+second one.
+################################################################################
+'
+
+	if [ $# -ne 2 ]; then 
+		echo "Wrong Usage: <script> <folder1> <folder2>"
+	else
+		if [[ "$(ls -A $1)" ]]; then
+			cp -r  $1/* $2/. 
+		else
+			echo "The Folder from which you want to copy elements is Empty!"
+		fi
+	fi
+	
