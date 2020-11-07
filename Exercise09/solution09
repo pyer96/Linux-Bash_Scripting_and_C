@@ -1,0 +1,53 @@
+#!/usr/bin/bash
+
+: '
+####################################_Pier_Luigi_Manfrini_######################################
+This script reads from STDIN a set of strings, stopping when the string is "END", and prints 
+them (numbering each line) to STDOUT or to a FILE, depending on how it has been called.
+
+The Following Script can be used without arguments (hence printing output to STDOUT)
+or with one argument specifying to which file the output needs to be printed!
+
+Script usage:
+	<./solution9> 		--> outputs the lines to STDOUT
+	<./solution9> <file1> 	--> outputs the lines to file1 (in append mode)
+
+If already existing file1 is destroyed and recreated
+
+The same goal achieved from the second use-case can be achieved also with:
+	./solution09 | tee <file1>
+
+###############################################################################################
+'
+
+STRING=()
+COUNTER=0
+read STRING[$COUNTER]
+while [[ "${STRING[$COUNTER]}" != "END" ]]
+do	
+	COUNTER=$(($COUNTER+1))
+	read -r STRING[$COUNTER] 
+done
+
+
+
+COUNTER=1
+
+if [ $# -eq 0 ]; then
+	COMMAND="echo \"\$COUNTER:\$i\""
+elif [ $# -eq 1 ]; then
+	if [ -e $1 -a -w $1 ]; then
+		rm $1
+	fi
+	COMMAND="echo \"\$COUNTER:\$i\" >>\$1"
+fi
+
+for i in "${STRING[@]}"
+do
+	if [ "$i" = "${STRING[-1]}" ]; then 
+		exit 0 
+	fi
+	eval $COMMAND
+	COUNTER=$(($COUNTER+1))
+
+done
