@@ -1,0 +1,23 @@
+#!/usr/bin/bash 
+: ' 
+########################_Pier_Luigi_Manfrini_###############################
+
+This script accepts at most 2 arguments ( < than 3 ) and prints them
+to the STDERR. The number of arguments passed is then saved as 
+a environmental variable N in the calling shell. 
+
+Script usage: 
+		$(<./solution15> <args> [...])
+
+############################################################################
+' 
+
+if [[ ! $# -lt 3 ]]; then
+	echo "Wrong Usage: \$(<./solution15> <args> [max 2 args])"
+	exit 1
+fi
+
+eval echo $@ >&2
+eval echo export N=$#
+
+
